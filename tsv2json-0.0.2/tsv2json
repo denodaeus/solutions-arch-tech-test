@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const tsv2json = require('./lib/tsv2json');
+
+program
+  .version('0.0.2')
+  .description('Given a specifically formatted tsv file, parse to a json output to stdout.')
+  .option('-f, --file <file>', 'tsv file to parse')
+  .parse(process.argv);
+
+const file = program.file;
+
+if (file) {
+  tsv2json
+    .parse(file)
+    .then((json) => console.log(JSON.stringify(json, null, 2)));
+} else {
+  program.help();
+}
